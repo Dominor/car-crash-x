@@ -1,6 +1,7 @@
 package org.academiadecodigo.bootcamp.gfx.simplegfx;
 
 import org.academiadecodigo.bootcamp.grid.Grid;
+import org.academiadecodigo.bootcamp.grid.GridColor;
 import org.academiadecodigo.bootcamp.grid.position.GridPosition;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
@@ -18,8 +19,8 @@ public class SimpleGfxGrid implements Grid {
         cellSize = 10;
         this.cols = cols;
         this.rows = rows;
-        rectangle = new Rectangle(PADDING, PADDING, (cols * cellSize), (rows * cellSize));
-        init();
+
+        //init();
     }
 
     /**
@@ -28,7 +29,7 @@ public class SimpleGfxGrid implements Grid {
     @Override
     public void init() {
 
-
+        rectangle = new Rectangle(PADDING, PADDING, (cols * cellSize), (rows * cellSize));
         rectangle.setColor(Color.WHITE);
         rectangle.draw();
     }
@@ -40,7 +41,6 @@ public class SimpleGfxGrid implements Grid {
     public int getCols() {
 
         return this.cols;
-        //return rectangle.getWidth()/getCellSize();
     }
 
     /**
@@ -49,7 +49,6 @@ public class SimpleGfxGrid implements Grid {
     @Override
     public int getRows() {
         return this.rows;
-        //return rectangle.getHeight()/getCellSize();
     }
 
     /**

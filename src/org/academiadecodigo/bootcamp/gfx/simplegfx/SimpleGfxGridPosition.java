@@ -23,7 +23,10 @@ public class SimpleGfxGridPosition extends AbstractGridPosition {
 
         super((int) (Math.random() * grid.getCols()), (int) (Math.random() * grid.getRows()), grid);
 
-        rectangle = new Rectangle(grid.columnToX(super.getCol()), grid.rowToY(super.getRow()), grid.getCellSize(), grid.getCellSize());
+        simpleGfxGrid = grid;
+        int x = grid.columnToX(getCol());
+        int y = grid.rowToY(getRow());
+        rectangle = new Rectangle(x, y, grid.getCellSize(), grid.getCellSize());
         show();
     }
 
@@ -36,7 +39,10 @@ public class SimpleGfxGridPosition extends AbstractGridPosition {
     public SimpleGfxGridPosition(int col, int row, SimpleGfxGrid grid){
         super(col, row, grid);
 
-        rectangle = new Rectangle(grid.columnToX(col), grid.rowToY(row), grid.getCellSize(), grid.getCellSize());
+        simpleGfxGrid = grid;
+        int x = grid.columnToX(col);
+        int y = grid.rowToY(row);
+        rectangle = new Rectangle(x, y, grid.getCellSize(), grid.getCellSize());
         show();
     }
 
@@ -61,39 +67,52 @@ public class SimpleGfxGridPosition extends AbstractGridPosition {
     /**
      * @see GridPosition#moveInDirection(GridDirection, int)
      */
-    @Override
+    /**@Override
     public void moveInDirection(GridDirection direction, int distance) {
 
-        int oldRow = getRow(), oldCol = getCol();
         int remainder, maxDistance;
-        SimpleGfxGrid grid = (getGrid() instanceof SimpleGfxGrid ? (SimpleGfxGrid) getGrid() : null);
-        int cellSize = grid.getCellSize();
-        int dist = distance, row = getRow(), col = getCol();
-        int rows = getGrid().getRows(), cols = grid.getCols();
+        int cellSize = simpleGfxGrid.getCellSize();
+        int row = getRow();
+        int col = getCol();
+        int rows = getGrid().getRows(), cols = simpleGfxGrid.getCols();
 
         super.moveInDirection(direction, distance);
 
         switch (direction) {
             case UP:
-                maxDistance = dist < row ? dist : row;
+                maxDistance = distance < row ? distance : row;
                 //rectangle.translate(0.0, (row - maxDistance) * cellSize);
                 rectangle.translate(0.0, (-maxDistance) * cellSize);
                 break;
             case DOWN:
                 remainder = rows - (row + 1);
-                maxDistance = dist > remainder ? remainder : dist;
+                maxDistance = distance > remainder ? remainder : distance;
                 rectangle.translate(0.0, (maxDistance) * cellSize);
                 break;
             case LEFT:
-                maxDistance = dist < col ? dist : col;
+                maxDistance = distance < col ? distance : col;
                 rectangle.translate((-maxDistance) * cellSize,0.0);
                 break;
             case RIGHT:
                 remainder = cols - (col + 1);
-                maxDistance = dist > remainder ? remainder : dist;
-                rectangle.translate((maxDistance) * cellSize,0.0);
+                maxDistance = distance > remainder ? remainder : distance;
+                rectangle.translate((maxDistance) * cellSize, 0.0);
                 break;
         }
+    }*/
+
+    @Override
+    public void moveInDirection (GridDirection direction, int distance) {
+
+        int initialCol = getCol();
+        int initialRow = getRow();
+
+        super.moveInDirection(direction, distance);
+
+        int dx = simpleGfxGrid.columnToX(getCol()) - simpleGfxGrid.columnToX(initialCol);
+        int dy = simpleGfxGrid.rowToY(getRow()) - simpleGfxGrid.rowToY(initialRow);
+
+        rectangle.translate(dx, dy);
     }
 
     /**
@@ -102,28 +121,7 @@ public class SimpleGfxGridPosition extends AbstractGridPosition {
     @Override
     public void setColor(GridColor color) {
 
+        this.rectangle.setColor(SimpleGfxColorMapper.getColor(color));
         super.setColor(color);
-        switch (color) {
-            case BLUE:
-                rectangle.setColor(Color.BLUE);
-                break;
-            case RED:
-                rectangle.setColor(Color.RED);
-                break;
-            case GREEN:
-                rectangle.setColor(Color.GREEN);
-                break;
-            case MAGENTA:
-                rectangle.setColor(Color.MAGENTA);
-                break;
-            case NOCOLOR:
-                rectangle.setColor(Color.WHITE);
-                break;
-            default:
-                // Should handle this better probably by throwing a suitable exception;
-                return;
-        }
-
-        show();
     }
 }
