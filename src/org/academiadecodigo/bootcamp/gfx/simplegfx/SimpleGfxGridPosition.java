@@ -64,37 +64,6 @@ public class SimpleGfxGridPosition extends AbstractGridPosition {
     @Override
     public void moveInDirection(GridDirection direction, int distance) {
 
-
-        /**int oldRow = getRow(), oldCol = getCol();
-        int remainder, maxDistance;
-        SimpleGfxGrid grid = (getGrid() instanceof SimpleGfxGrid ? (SimpleGfxGrid) getGrid() : null);
-        int cellSize = grid.getCellSize();
-        int distToPixels = distance * cellSize, rowPixels = getRow() * cellSize, colPixels = getCol() * cellSize;
-        int rowsPixels = getGrid().getRows() * cellSize, colsPixels = grid.getCols() * cellSize;
-
-        super.moveInDirection(direction, distance);
-
-        switch (direction) {
-            case UP:
-                maxDistance = distToPixels < rowPixels ? distToPixels : rowPixels;
-                rectangle.translate(0.0, rowPixels + maxDistance);
-                break;
-            case DOWN:
-                remainder = rowsPixels - (rowPixels + 1);
-                maxDistance = distToPixels > remainder ? remainder : distToPixels;
-                rectangle.translate(0.0, rowPixels + maxDistance);
-                break;
-            case LEFT:
-                maxDistance = distToPixels < colPixels ? distToPixels : colPixels;
-                rectangle.translate(colPixels - maxDistance,0.0);
-                break;
-            case RIGHT:
-                remainder = colsPixels - (colPixels + 1);
-                maxDistance = distToPixels > remainder ? remainder : distToPixels;
-                rectangle.translate(colPixels + maxDistance,0.0);
-                break;
-        }*/
-
         int oldRow = getRow(), oldCol = getCol();
         int remainder, maxDistance;
         SimpleGfxGrid grid = (getGrid() instanceof SimpleGfxGrid ? (SimpleGfxGrid) getGrid() : null);
